@@ -59,3 +59,4 @@ jobs:
         name: my-artifact
         path: ${{ github.workspace }}/
         if-no-files-found: error
+        overwrite: 1
