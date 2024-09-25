@@ -32,28 +32,26 @@ jobs:
         python -m pip install --upgrade pip
         pip install pylint
 
-    # note pytest will run all files of the form test_*.py or *_test.py in the current directory and its subdirectories
-    - name: Check code using pytest
-      run: |
-        pip install pytest pytest-cov
-        pytest test_*.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
-        
     - name: Lint with Ruff
       run: |
         pip install ruff
         ruff check --output-format=github
         continue on error: true
-
-    - name: Upload pytest test results
-      uses: actions/upload-artifact@v4
-      with:
-        name: pytest-results-${{ matrix.python-version }}
-        path: junit/test-results-${{ matrix.python-version }}.xml
-      # Use always() to always run this step to publish test results when there are test failures
-      if: ${{ always() }}
+        
+    # note pytest will run all files of the form test_*.py or *_test.py in the current directory and its subdirectories
+    - name: Check code using pytest
+      run: |
+        pip install pytest pytest-cov
+        pytest test_*.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
 
         
-    - name: upload arifact log (dir)
+    - name: Create pytest test results log
+      run: |
+        mkdir logfile
+        pytest --junit-xml = ${{ github.workspace }}/logFile
+            
+        
+    - name: compress and upload file
       uses: actions/upload-artifact@v4
       with:
         name: my-artifact
