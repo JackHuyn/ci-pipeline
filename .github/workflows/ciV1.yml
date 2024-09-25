@@ -44,6 +44,7 @@ jobs:
     - name: Check code using pytest
       run: |
         pip install pytest pytest-cov
+        pytest --maxfail = 10
         pytest test_*.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
 
         
