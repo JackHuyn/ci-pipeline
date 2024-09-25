@@ -54,7 +54,7 @@ jobs:
     - name: compress and upload file
       uses: actions/upload-artifact@v4
       with:
-        name: my-artifact
+        name: log_File
         path: ${{ github.workspace }}/
         if-no-files-found: error
         overwrite: true
